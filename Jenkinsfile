@@ -1,5 +1,6 @@
 node {
     
+    def sonarUrl = 'sonar.host.url=http://192.168.1.133:9000'
     def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'
     
     stage('SCM Checkout') {
