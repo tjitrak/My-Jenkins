@@ -7,10 +7,9 @@ node {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
     }
     stage('SonarQube scan Quality Code') {  
-        withCredentials([string(credentialsId: 'sonarqube', variable: 'jenkins')]) {
-        def sonarToken = "sonar.login=${sonarToken}"
-        sh "${mvn} sonar:sonar -D${sonarUrl}  -D${sonarToken}"
-	 }
+	withSonarQubeEnv('Java-Scan') { 
+          sh "${mvn}/bin/mvn sonar:sonar"
+        }
         
     }
     stage('Checkmarx scan Security Code') {
