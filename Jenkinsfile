@@ -9,5 +9,6 @@ node {
     stage('IndependencyCheck Scan') {
     }
     stage('Build') {
+        sh 'clean install package'
     }
 }
