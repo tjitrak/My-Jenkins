@@ -8,7 +8,7 @@ node {
     }
     stage('SonarQube scan Quality Code') {  
 	withSonarQubeEnv('Java-Scan') { 
-          sh "${mvn}/bin/mvn sonar:sonar"
+          sh "${mvn} sonar:sonar"
         }
         
     }
