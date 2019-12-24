@@ -9,6 +9,6 @@ node {
     stage('IndependencyCheck Scan') {
     }
     stage('Build') {
-        sh 'mvn package'
+        sh 'mvn clean package'
     }
 }
