@@ -2,6 +2,11 @@ node {
     
     def sonarUrl = 'sonar.host.url=http://sonar.1secure.com:9000'
     def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'
+
+	stage('Deleted WS') {
+	deleteDir()
+	}
+	
     
     stage('GitLab Checkout') {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
@@ -31,8 +36,8 @@ node {
     stage('Maven Build') {
         sh "${mvn} clean install package" 
     }
-    
-    stage('Jfrog Artifactory') {
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)]) 
-    }	
+//    
+//    stage('Jfrog Artifactory') {
+//        sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)]) 
+//    }	
 }
