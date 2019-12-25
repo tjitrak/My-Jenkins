@@ -44,13 +44,20 @@ node {
 		//sshagent(['dockeradmin']) {
 		sshagent (credentials: ['dockeradmin']){
     			
-			// def containerStop = "docker stop devops-demo-container"
-			// def containerRemove = "docker rm devops-demo-container"
-			// def dockerRemove = "docker rmi devops-demo tomcat"
+			def containerStop = "docker stop devops-demo-container"
+			def containerRemove = "docker rm devops-demo-container"
+			def dockerRemove = "docker rmi devops-demo tomcat"
+			def dockerBuild = "docker build -t devops-demo ."
+			def dockerRun = "docker run -d -p 8080:8080 --name devops-demo-container devops-demo"
 			def Remove = "rm -f devops-demo.war"
 			def Rename = "mv multi3-3.9-TETRA.war devops-demo.war"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Remove}"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Rename}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerStop}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerRemove}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRemove}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerBuild}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRun}"
 		}
 	}
 }
