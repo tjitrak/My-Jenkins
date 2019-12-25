@@ -41,7 +41,8 @@ node {
 	}
 	
 	stage('Deploy On Dev'){
-		sshagent(['dockeradmin']) {
+		//sshagent(['dockeradmin']) {
+		sshagent (credentials: ['dockeradmin']){
     			
 			// def containerStop = "docker stop devops-demo-container"
 			// def containerRemove = "docker rm devops-demo-container"
