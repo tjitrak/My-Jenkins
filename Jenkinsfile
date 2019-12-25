@@ -1,14 +1,9 @@
 node {
-    
-    def sonarUrl = 'sonar.host.url=http://sonar.1secure.com:9000'
-    def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'
 
-	stage('Deleted WS') {
-	deleteDir()
-	}
-	
+    def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'	
     
     stage('GitLab Checkout') {
+	deleteDir()   
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
     
     }
