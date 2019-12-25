@@ -30,5 +30,6 @@ node {
 	
     stage('Maven Build') {
         sh "${mvn} clean install package"
+	sh "mv target/*.war target/devopsdemo.war"    
     }
 }
