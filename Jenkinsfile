@@ -39,4 +39,17 @@ node {
 	stage('Build Docker Image') {
 		sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 	}
+	
+	stage('Deploy On Dev'){
+		sshagent(['dockeradmin']) {
+    			
+			// def containerStop = "docker stop devops-demo-container"
+			// def containerRemove = "docker rm devops-demo-container"
+			// def dockerRemove = "docker rmi devops-demo tomcat"
+			def Remove = "rm -f devops-demo.war"
+			def Rename = "mv multi3-3.9-TETRA.war devops-demo.war"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Remove}"
+			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Rename}"
+		}
+	}
 }
