@@ -37,7 +37,7 @@ node {
         sh "${mvn} clean install package" 
     }
 //    
-//    stage('Jfrog Artifactory') {
+    stage('Jfrog Artifactory') {
 //        sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)]) 
-//    }	
+    }	
 }
