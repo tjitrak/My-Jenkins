@@ -53,9 +53,9 @@ node {
 			def Rename = "mv multi3-3.9-TETRA.war devops-demo.war"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Remove}"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Rename}"
-			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerStop}"
-			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerRemove}"
-			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRemove}"
+			// sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerStop}"
+			// sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${containerRemove}"
+			// sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRemove}"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerBuild}"
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRun}"
 		}
