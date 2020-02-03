@@ -7,14 +7,14 @@ node {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
     
     }
-    stage('SonarQube scan Quality Code') {  
+    stage('SonarQube - Quality Code') {  
 	withSonarQubeEnv('Java-Scan') { 
           sh "${mvn} sonar:sonar"
         }
         
     }
 //	
-//   stage('Checkmarx scan Security Code') {
+   stage('Checkmarx - Security Code') {
 //	step([$class: 'CxScanBuilder', comment: '', credentialsId: '', enableProjectPolicyEnforcement: true, excludeFolders: '', excludeOpenSourceFolders: '', exclusionsSetting: 'global', failBuildOnNewResults: false, failBuildOnNewSeverity: 'HIGH', filterPattern: '''!**/_cvs/**/*, !**/.svn/**/*,   !**/.hg/**/*,   !**/.git/**/*,  !**/.bzr/**/*, !**/bin/**/*,
 // !**/obj/**/*,  !**/backup/**/*, !**/.idea/**/*, !**/*.DS_Store, !**/*.ipr,     !**/*.iws,
 // !**/*.bak,     !**/*.tmp,       !**/*.aac,      !**/*.aif,      !**/*.iff,     !**/*.m3u, !**/*.mid, !**/*.mp3,
@@ -26,15 +26,16 @@ node {
 // !**/*.hdml,    !**/*.hsql,      !**/*.ht,       !**/*.hta,      !**/*.htc,     !**/*.htd, !**/*.war, !**/*.ear,
 // !**/*.htmls,   !**/*.ihtml,     !**/*.mht,      !**/*.mhtm,     !**/*.mhtml,   !**/*.ssi, !**/*.stm,
 // !**/*.stml,    !**/*.ttml,      !**/*.txn,      !**/*.xhtm,     !**/*.xhtml,   !**/*.class, !**/*.iml, !Checkmarx/Reports/*.*''', fullScanCycle: 10, generatePdfReport: true, groupId: '00000000-1111-1111-b111-989c9070eb11', includeOpenSourceFolders: '', incremental: true, osaArchiveIncludePatterns: '*.zip, *.war, *.ear, *.tgz', osaEnabled: true, osaInstallBeforeScan: false, password: '{AQAAABAAAAAQEvdTgdooU71WECpu1PLPs8d0NPtraCvMwqDc2BlMGIs=}', preset: '36', projectName: 'Build_Project_by_Pipeline', sastEnabled: true, serverUrl: 'http://techcrub.thddns.net:2440', sourceEncoding: '1', username: '', vulnerabilityThresholdResult: 'FAILURE', waitForResultsEnabled: true])
-//    }
+    }
 
     stage('Maven Build') {
         sh "${mvn} clean install package" 
+	archiveArtifacts artifacts: 'multi3/target/*.war', onlyIfSuccessful: true    
     }    
 	
-	stage('Jfrog archive Artifacts') {
-		archiveArtifacts artifacts: 'multi3/target/*.war', onlyIfSuccessful: true
-	}
+//	stage('Jfrog archive Artifacts') {
+//		archiveArtifacts artifacts: 'multi3/target/*.war', onlyIfSuccessful: true
+//	}
 	
 	stage('Build Docker Image') {
 		sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
