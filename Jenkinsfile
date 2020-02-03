@@ -2,7 +2,7 @@ node {
 
     def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'	
     
-    stage('GitLab Checkout') {
+    stage('GitHub Checkout') {
 	deleteDir()   
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
     
