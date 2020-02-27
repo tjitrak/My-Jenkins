@@ -23,6 +23,6 @@ node {
     }
 	
     stage('Maven Build') {
-        sh "${mvn} mvn clean install"
+        sh "${mvn} mvn install"
     }
 }
