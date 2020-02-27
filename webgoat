@@ -7,12 +7,11 @@ node {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/WebGoat/WebGoat.git']]])
     
     }
-    stage('SonarQube scan Quality Code') {  
-	withSonarQubeEnv('Java-Scan') { 
-          sh "${mvn} sonar:sonar"
-        }
-        
-    }
+//    stage('SonarQube scan Quality Code') {  
+//	withSonarQubeEnv('Java-Scan') { 
+//          sh "${mvn} sonar:sonar"
+//        }      
+//    }
 	
     stage('Checkmarx scan Security Code') {
 	step([$class: 'CxScanBuilder', comment: '', credentialsId: '', enableProjectPolicyEnforcement: true, excludeFolders: '', excludeOpenSourceFolders: '', exclusionsSetting: 'global', failBuildOnNewResults: false, failBuildOnNewSeverity: 'HIGH', filterPattern: '''!**/_cvs/**/*, !**/.svn/**/*,   !**/.hg/**/*,   !**/.git/**/*,  !**/.bzr/**/*, !**/bin/**/*,
