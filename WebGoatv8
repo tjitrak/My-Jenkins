@@ -17,7 +17,7 @@ node {
    stage('Build') {
       // Run the maven build
       if (isUnix()) {
-         sh "cd WebGoat"
+         sh "cd webgoat-lessons"
          sh "'${mvnHome}' compile test package"
       } else {
          bat(/"${mvnHome}\bin\mvn" compile test package/)
