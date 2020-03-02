@@ -22,11 +22,11 @@ node {
          bat(/"${mvnHome}\bin\mvn" compile test package/)
       }
    }
-   stage("Results"){
+   // stage("Results"){
         //Display test results
-        junit 'webgoat-container/target/surefire-reports/TEST*.xml'
+   //     junit 'webgoat-container/target/surefire-reports/TEST*.xml'
         
         //Artifacts
-        archiveArtifacts 'webgoat-container/target/webgoat-container-8.0-SNAPSHOT.war'
-    }
+   //     archiveArtifacts 'webgoat-container/target/webgoat-container-8.0-SNAPSHOT.war'
+   // }
 }
