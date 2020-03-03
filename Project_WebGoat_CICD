@@ -38,7 +38,7 @@ node {
 		def containerRemove = "docker rm webgoat-demo-container"
 		def dockerRemove = "docker rmi webgoat-demo tomcat"
 		def dockerBuild = "docker build -t webgoat-demo ."
-		def dockerRun = "docker run -d -p 8090:8080 --name webgoat-demo-container webgoat-demo"
+		def dockerRun = "docker run -d -p 8080:8080 --name webgoat-demo-container webgoat-demo"
 		def Remove = "rm -f webgoat-demo.war"
 		def Rename = "mv webgoat-container-7.1-SNAPSHOT.war webgoat-demo.war"
 		sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${Remove}"
