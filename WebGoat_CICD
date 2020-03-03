@@ -7,12 +7,6 @@ node {
         checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/SreeniYC/WebGoat.git']]])
     }
     
-//    stage('SonarQube - Quality Code') {  
-//	withSonarQubeEnv('Java-Scan') { 
-//          sh "${mvn} sonar:sonar"
-//        }        
-//    }
-	
    stage('Checkmarx - Security Code') {
 	step([$class: 'CxScanBuilder', comment: '', credentialsId: '', enableProjectPolicyEnforcement: true, excludeFolders: '', excludeOpenSourceFolders: '', exclusionsSetting: 'global', failBuildOnNewResults: false, failBuildOnNewSeverity: 'HIGH', filterPattern: '''!**/_cvs/**/*, !**/.svn/**/*,   !**/.hg/**/*,   !**/.git/**/*,  !**/.bzr/**/*, !**/bin/**/*,
  !**/obj/**/*,  !**/backup/**/*, !**/.idea/**/*, !**/*.DS_Store, !**/*.ipr,     !**/*.iws,
@@ -31,11 +25,8 @@ node {
         sh "${mvn} compile test package" 
         archiveArtifacts artifacts: 'webgoat-container/target/webgoat-container-7.1-SNAPSHOT.war', onlyIfSuccessful: true    
     }    
-	
-//	stage('Jfrog archive Artifacts') {
-//		archiveArtifacts artifacts: 'multi3/target/*.war', onlyIfSuccessful: true
-//	}
-	
+
 	stage('Build Docker Image') {
 		sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'webgoat-container/target', sourceFiles: 'webgoat-container/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 	}
+}
