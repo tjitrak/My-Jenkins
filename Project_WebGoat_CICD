@@ -4,7 +4,7 @@ node {
     
     stage('GitHub Checkout') {
 	deleteDir()   
-        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/WebGoat-7.1.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/WebGoat-7.1.git']]])
     }
     
     stage('Maven Build') {
