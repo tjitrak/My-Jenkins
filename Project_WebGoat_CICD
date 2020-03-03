@@ -23,7 +23,7 @@ node {
 
     stage('Maven Build') {
 	build 'Project_Build_WebGoat-Lessons'
-	sh "${mvn} compile test package" 
+	sh "${mvn} clean install package" 
         archiveArtifacts artifacts: 'webgoat-container/target/webgoat-container-7.1-SNAPSHOT.war', onlyIfSuccessful: true  
     }    
 
