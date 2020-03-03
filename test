@@ -1,0 +1,19 @@
+node {
+
+    def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'	
+    
+    stage('GitHub Checkout') {
+	deleteDir()   
+        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hamhc/WebGoat-7.1.git']]])
+    }    
+
+    stage('Maven Build') {
+	build 'Project_Build_WebGoat-Lessons'
+	sh "${mvn} clean install package" 
+        archiveArtifacts artifacts: 'webgoat-container/target/webgoat-container-7.1-SNAPSHOT.war', onlyIfSuccessful: true  
+    }    
+
+	stage('Build Docker Image') {
+		sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'webgoat-container/target', sourceFiles: 'webgoat-container/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
+	}	
+}
