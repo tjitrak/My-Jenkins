@@ -35,7 +35,7 @@ node {
     			
 		def containerStop = "docker stop webgoat-demo-container"
 		def containerRemove = "docker rm webgoat-demo-container"
-		def dockerRemove = "docker rmi devops-demo tomcat"
+		def dockerRemove = "docker rmi webgoat-demo tomcat"
 		def dockerBuild = "docker build -t webgoat-demo ."
 		def dockerRun = "docker run -d -p 8090:8080 --name webgoat-demo-container webgoat-demo"
 		def Remove = "rm -f webgoat-demo.war"
