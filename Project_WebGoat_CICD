@@ -4,7 +4,7 @@ node {
     
     stage('GitHub Checkout') {
 	deleteDir()   
-        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/SreeniYC/WebGoat.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/hamhc/WebGoat-7.1.git']]])
     }
     
    stage('Checkmarx - Security Code') {
