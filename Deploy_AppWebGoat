@@ -8,7 +8,7 @@ node {
       }
 
       stage('Maven Build') {
-          sh '''
-          sh "${mvn} -B  install -DskipTests'''" 
+
+          sh "${mvn} -B  install -DskipTests"      
       }    
     }
