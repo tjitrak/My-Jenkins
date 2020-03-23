@@ -1,0 +1,14 @@
+node {
+
+    def mvn = tool (name: 'M2_HOME', type: 'maven') + '/bin/mvn'	
+    
+      stage('GitHub Checkout') {
+          deleteDir()   
+          checkout([$class: 'GitSCM', branches: [[name: '*/develop']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/WebGoat/WebGoat.git']]])
+      }
+
+      stage('Maven Build') {
+          sh '''
+          sh "${mvn} -B  install -DskipTests'''" 
+      }    
+    }
