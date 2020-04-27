@@ -7,12 +7,12 @@ node {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/webapp_maven_deploy.git']]])
     
     }
-    stage('SonarQube - Quality Code') {  
-	withSonarQubeEnv('Java-Scan') { 
-          sh "${mvn} sonar:sonar"
-        }
+//    stage('SonarQube - Quality Code') {  
+//	withSonarQubeEnv('Java-Scan') { 
+//          sh "${mvn} sonar:sonar"
+//        }
         
-    }
+//    }
 	
 	stage('Checkmarx - Security Code') {
 	step([$class: 'CxScanBuilder', comment: '', credentialsId: '', excludeFolders: '', excludeOpenSourceFolders: '', exclusionsSetting: 'global', failBuildOnNewResults: false, failBuildOnNewSeverity: 'HIGH', filterPattern: '''!**/_cvs/**/*, !**/.svn/**/*,   !**/.hg/**/*,   !**/.git/**/*,  !**/.bzr/**/*, !**/bin/**/*,
