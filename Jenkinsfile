@@ -36,7 +36,7 @@ node {
 //	stage('Jfrog archive Artifacts') {
 //		archiveArtifacts artifacts: 'multi3/target/*.war', onlyIfSuccessful: true
 //	}
-	
+/*	
 	stage('Build Docker Image') {
 		sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-host', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '/multi3/target', sourceFiles: 'multi3/target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])	
 	}
@@ -64,4 +64,5 @@ node {
 			sh "ssh -o StrictHostKeyChecking=no tjitrak@192.168.1.121 ${dockerRun}"
 		}
 	}
+	*/
 }
