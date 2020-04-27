@@ -30,9 +30,9 @@ node {
 	
 	}
 	
-	catch(all) {
-                        currentBuild.result='FAILURE'
-                    }   
+//	catch(all) {
+//                       currentBuild.result='FAILURE'
+//                    }   
 }
 
     stage('Maven Build') {
