@@ -28,6 +28,10 @@ node {
 !**/*.stml,    !**/*.ttml,      !**/*.txn,      !**/*.xhtm,     !**/*.xhtml,   !**/*.class, !**/*.iml, !Checkmarx/Reports/*.*''', fullScanCycle: 10, generatePdfReport: true, groupId: '00000000-1111-1111-b111-989c9070eb11', includeOpenSourceFolders: '', jobStatusOnError: 'FAILURE', mediumThreshold: 1, osaArchiveIncludePatterns: '*.zip, *.war, *.ear, *.tgz', osaEnabled: true, osaInstallBeforeScan: false, password: '{AQAAABAAAAAQnNXgE9ZEHv9G7TiCGnyY78okDrLs8Jn8VFc6C7nsjnw=}', preset: '36', projectName: 'Build_Maven_by_Pipeline', sastEnabled: true, serverUrl: 'http://192.168.1.115', sourceEncoding: '1', username: '', vulnerabilityThresholdEnabled: true, vulnerabilityThresholdResult: 'FAILURE', waitForResultsEnabled: true])
 	
 	}
+	
+	catch(all) {
+                        currentBuild.result='FAILURE'
+                    }   
 
     stage('Maven Build') {
         sh "${mvn} clean install package" 
