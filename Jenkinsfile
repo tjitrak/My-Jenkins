@@ -15,6 +15,7 @@ node {
 //    }
 	
 	stage('Checkmarx - Security Code') {
+	{
 	step([$class: 'CxScanBuilder', comment: '', credentialsId: '', excludeFolders: '', excludeOpenSourceFolders: '', exclusionsSetting: 'global', failBuildOnNewResults: false, failBuildOnNewSeverity: 'HIGH', filterPattern: '''!**/_cvs/**/*, !**/.svn/**/*,   !**/.hg/**/*,   !**/.git/**/*,  !**/.bzr/**/*, !**/bin/**/*,
 !**/obj/**/*,  !**/backup/**/*, !**/.idea/**/*, !**/*.DS_Store, !**/*.ipr,     !**/*.iws,
 !**/*.bak,     !**/*.tmp,       !**/*.aac,      !**/*.aif,      !**/*.iff,     !**/*.m3u, !**/*.mid, !**/*.mp3,
@@ -32,6 +33,7 @@ node {
 	catch(all) {
                         currentBuild.result='FAILURE'
                     }   
+}
 
     stage('Maven Build') {
         sh "${mvn} clean install package" 
