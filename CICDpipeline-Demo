@@ -1,0 +1,31 @@
+node {
+
+	stage('GitHub Checkout') {
+		deleteDir() 
+		checkout([$class: 'GitSCM', branches: [[name: 'AltoroJ-3.2']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/tjitrak/AltoroJ.git']]])
+	}
+	stage('SCA - Scan'){
+	    
+	}
+	stage('SAST - Varacode Scan'){
+	    
+	}
+	stage('Gradle Build') {
+		sh '/var/lib/jenkins/tools/hudson.plugins.gradle.GradleInstallation/Gradle_3.0/bin/gradle build'
+	}
+    
+	stage('Build Docker Image') {
+	sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-demo', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'build/libs/', sourceFiles: 'build/libs/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	}
+	
+	stage('Deploy On Dev'){
+	sshPublisher(publishers: [sshPublisherDesc(configName: 'docker-demo', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''docker stop altoroj-demo-app;
+docker rm altoroj-demo-app;
+docker rmi altoroj-demo-app tomcat;
+cd /home/tjitrak; 
+docker build -t altoroj-demo-app .; 
+docker run -d --name altoroj-demo-app -p 80:8080 altoroj-demo-app;''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: 'build/libs/', sourceFiles: 'build/libs/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+	}
+	
+	stage('DAST - Rapid7 Scan')
+}
